@@ -1,4 +1,4 @@
-package My_java;/**
+package com.test;/**
  * @program: SpringCloud_Parent
  * @description: spring代理实现机制
  * @author: ZhangChi
@@ -30,7 +30,7 @@ public class ProxyUtil {
         //内容
         String content = "";
         //包信息
-        String packageContent = "package My_java;";
+        String packageContent = "package com.test;";
         //实例信息,实际类
         Class targetInfo = target.getClass().getInterfaces()[0];
         //名称
@@ -39,7 +39,7 @@ public class ProxyUtil {
         String importContent = "import " + targetInfo.getName() + ";";
         //类修饰信息
         String classContent = "public class $Proxy implements " + targetInfoName + "{";
-        //字段信息
+        //属性信息
         String fieldContent = "private " + targetInfoName + " target;";
         //构造信息
         String construterContent = "public $Proxy(" + targetInfoName + " target){"
@@ -91,9 +91,9 @@ public class ProxyUtil {
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, null, null, null, units);
         task.call();
         fileManager.close();
-        URL[] urls = new URL[]{new URL("file:D:\\")};
+        URL[] urls = new URL[]{new URL("file:D:\\\\")};
         URLClassLoader urlClassLoader = new URLClassLoader(urls);
-        Class clazz = urlClassLoader.loadClass("My_java.$Proxy");
+        Class clazz = urlClassLoader.loadClass("com.test.$Proxy");
         Constructor constructor = clazz.getConstructor(targetInfo);
         Object proxy = constructor.newInstance(target);
         return proxy;
